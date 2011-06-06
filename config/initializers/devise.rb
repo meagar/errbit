@@ -1,3 +1,4 @@
+
 # Use this hook to configure devise mailer, warden hooks and so forth. The first
 # four configuration values can also be set straight in your models.
 Devise.setup do |config|
@@ -139,4 +140,13 @@ Devise.setup do |config|
   #   end
   #   manager.default_strategies(:scope => :user).unshift :twitter_oauth
   # end
+
+  autoload 'Cas', 'cas'
+
+  if Errbit::Config::cas_server
+   # require 'cas'
+    config.omniauth :cas, :cas_server => Errbit::Config::cas_server
+  end
+
 end
+

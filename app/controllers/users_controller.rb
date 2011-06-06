@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   respond_to :html
   
-  before_filter :require_admin!, :except => [:edit, :update]
+  before_filter :require_admin!, :except => [:edit, :update, :cas]
   before_filter :find_user, :only => [:show, :edit, :update, :destroy]
   before_filter :require_user_edit_priviledges, :only => [:edit, :update]
   
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-  
+
   def edit
   end
   
@@ -58,6 +58,7 @@ class UsersController < ApplicationController
     flash[:success] = "That's sad. #{@user.name} is no longer part of your team."
     redirect_to users_path
   end
+
   
   protected
   

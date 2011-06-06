@@ -11,14 +11,15 @@
 .required
   = f.label 'Entries per page'
   = f.select :per_page, [10, 20, 30, 50, 75, 100]
-  
-.required
-  = f.label :password
-  = f.password_field :password
-  
-.required
-  = f.label :password_confirmation
-  = f.password_field :password_confirmation
+
+- if !Errbit::Config::cas_server
+  .required
+    = f.label :password
+    = f.password_field :password
+    
+  .required
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
 
 - if current_user.admin?
   .checkbox

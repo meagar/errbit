@@ -3,6 +3,8 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  include Cas if Errbit::Config::cas_server
+
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable,
          :validatable, :token_authenticatable
@@ -17,7 +19,7 @@ class User
   validates_presence_of :name
   
   attr_protected :admin
-  
+
   # Mongoid doesn't seem to currently support
   # referencing embedded documents
   def watchers
@@ -39,9 +41,10 @@ class User
     apps.all.include?(app)
   end
   
-  protected
-  
-    def destroy_watchers
-      watchers.each(&:destroy)
-    end
+protected
+
+  def destroy_watchers
+    watchers.each(&:destroy)
+  end
+
 end
